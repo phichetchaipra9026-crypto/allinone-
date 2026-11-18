@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALL IN ONE การเกษตร | สหกรณ์การเกษตรดิจิทัล อ.นาตาล</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body, button, input, select, textarea {
+      font-family: 'Sarabun', sans-serif;
+      background-color: #f4f7f4;
+      line-height: 1.6;
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, #14532d 0%, #166534 55%, #15803d 100%);
+    }
+    .card-hover {
+      transition: all 0.2s ease-in-out;
+    }
+    .card-hover:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -8px rgba(20, 83, 45, 0.18);
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+    .animate-ticker {
+      display: flex;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+    .animate-ticker:hover {
+      animation-play-state: paused;
+    }
+  </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+  <!-- Top Live Price Ticker Bar -->
+  <div class="bg-amber-400 text-amber-950 text-sm py-2 overflow-hidden border-b border-amber-500/30 font-medium">
+    <div class="animate-ticker space-x-8 px-4">
+      <span>🌾 <strong>ราคากลางสหกรณ์ อ.นาตาล วันนี้ (17 พ.ย. 2569):</strong></span>
+      <span>🌾 ข้าวเปลือกหอมมะลิ (ความชื้น 15%): <strong>15,200 บ./ตัน</strong> ▲ +150</span>
+      <span>🎋 อ้อยโรงงาน (10 CCS): <strong>1,420 บ./ตัน</strong> ▲ +20</span>
+      <span>🌳 ยางก้อนถ้วย (DRC 50%): <strong>34.50 บ./กก.</strong> ▲ +0.50</span>
+      <span>🌴 ปาล์มทะลายสุก (น้ำมัน 18%): <strong>6.40 บ./กก.</strong> ● คงที่</span>
+      <span>🥔 มันสำปะหลังสด (เชื้อแป้ง 25%): <strong>3.15 บ./กก. (3,150 บ./ตัน)</strong> ▲ +0.10</span>
+      <!-- Duplicate for seamless loop -->
+      <span>🌾 <strong>ราคากลางสหกรณ์ อ.นาตาล วันนี้ (17 พ.ย. 2569):</strong></span>
+      <span>🌾 ข้าวเปลือกหอมมะลิ (ความชื้น 15%): <strong>15,200 บ./ตัน</strong> ▲ +150</span>
+      <span>🎋 อ้อยโรงงาน (10 CCS): <strong>1,420 บ./ตัน</strong> ▲ +20</span>
+      <span>🌳 ยางก้อนถ้วย (DRC 50%): <strong>34.50 บ./กก.</strong> ▲ +0.50</span>
+      <span>🌴 ปาล์มทะลายสุก (น้ำมัน 18%): <strong>6.40 บ./กก.</strong> ● คงที่</span>
+      <span>🥔 มันสำปะหลังสด (เชื้อแป้ง 25%): <strong>3.15 บ./กก. (3,150 บ./ตัน)</strong> ▲ +0.10</span>
+    </div>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <header class="bg-white shadow-sm sticky top-0 z-30 border-b border-emerald-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-700 flex items-center justify-center text-white text-2xl shadow-md">
+          🌱
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-xl font-bold text-emerald-900 tracking-tight">ALL IN ONE การเกษตร</h1>
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-emerald-200">
+              สหกรณ์ดิจิทัล อ.นาตาล
+            </span>
+          </div>
+          <p class="text-xs text-slate-500">ศูนย์กลางข้อมูลราคา คัดเกรด ซื้อ-ขายผลผลิต และจ้างงานการเกษตรครบวงจร</p>
+        </div>
+      </div>
+
+      <!-- User Role Switcher -->
+      <div class="flex items-center gap-2">
+        <div class="flex items-center space-x-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+          <span class="text-xs font-medium text-slate-500 px-2 hidden sm:inline">มุมมองผู้ใช้งาน:</span>
+          <button onclick="setRole('farmer')" id="role-farmer" class="role-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-700 text-white shadow-sm transition">
+            👩‍🌾 เกษตรกร
+          </button>
+          <button onclick="setRole('worker')" id="role-worker" class="role-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-white transition">
+            🚜 ผู้รับจ้าง/กรรมกร
+          </button>
+          <button onclick="setRole('buyer')" id="role-buyer" class="role-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-white transition">
+            🏪 ผู้ซื้อ/ลานรับซื้อ
+          </button>
+        </div>
+        <button onclick="openGSheetModal('market')" class="px-3 py-2 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200 transition flex items-center gap-1">
+          <span>📊</span> Google Sheet
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner & Role Context Banner -->
+  <section class="hero-gradient text-white py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div class="lg:col-span-8 space-y-3">
+          <div id="role-badge" class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-3.5 py-1 rounded-full text-xs font-medium text-amber-300 border border-white/20">
+            ✨ โหมดสมาชิกสหกรณ์: กลุ่มเกษตรกรผู้ผลิตและวางแผนจำหน่าย
+          </div>
+          <h2 id="hero-title" class="text-2xl sm:text-3xl font-bold leading-snug">
+            เช็กราคากลาง คำนวณเกรดผลผลิต และหารถรับจ้างในพื้นที่ อ.นาตาล ได้ในที่เดียว
+          </h2>
+          <p id="hero-desc" class="text-emerald-100 text-sm sm:text-base max-w-2xl">
+            ลดเวลาเดินทางไปสอบถามราคาหน้าร้าน ต่อรองราคาอย่างเป็นธรรม และรวมกลุ่มจำหน่ายผลผลิตผ่านสหกรณ์การเกษตรดิจิทัล (เชื่อมต่อฐานข้อมูล Google Sheets อัตโนมัติ)
+          </p>
+        </div>
+
+        <!-- Cooperative Summary Card -->
+        <div class="lg:col-span-4 bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/20 grid grid-cols-2 gap-3 text-center">
+          <div class="bg-black/15 rounded-xl p-3">
+            <div class="text-xs text-emerald-200">พืชเศรษฐกิจหลัก</div>
+            <div class="text-xl font-bold text-amber-300 mt-0.5">5 ชนิด</div>
+            <div class="text-[11px] text-emerald-100">ข้าว อ้อย ยาง ปาล์ม มันฯ</div>
+          </div>
+          <div class="bg-black/15 rounded-xl p-3">
+            <div class="text-xs text-emerald-200">ผู้ประสานงานตลาด</div>
+            <div class="text-sm font-bold text-amber-300 mt-1">นายพิเชษฐ์ชัย</div>
+            <div class="text-[11px] text-emerald-100">โทร. 062-418-1699</div>
+          </div>
+          <div class="bg-black/15 rounded-xl p-3">
+            <div class="text-xs text-emerald-200">เครือข่ายร้านค้า/บริการ</div>
+            <div class="text-xl font-bold text-amber-300 mt-0.5">8 ร้านค้า</div>
+            <div class="text-[11px] text-emerald-100">ดูแลโดยสมาชิกทั้ง 7 ราย</div>
+          </div>
+          <div class="bg-black/15 rounded-xl p-3">
+            <div class="text-xs text-emerald-200">ฐานข้อมูลออนไลน์</div>
+            <div class="text-sm font-bold text-amber-300 mt-1">Google Sheets</div>
+            <div class="text-[11px] text-emerald-100">ซิงค์ข้อมูลเรียลไทม์</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full space-y-12">
+
+    <!-- ==========================================
+         TAB 1: PRICE & SMART GRADING CALCULATOR
+         ========================================== -->
+    <div id="tab-price" class="tab-content space-y-8">
+      <!-- 5 Economic Crops Price Cards -->
+      <div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+              <span>📈</span> ตารางราคาพืชเศรษฐกิจหลัก 5 ชนิด (อัปเดตออนไลน์โดยตรง)
+            </h3>
+            <p class="text-xs text-slate-500">คลิกเลือกพืชที่ต้องการเพื่อจำลองการคัดเกรด คำนวณราคา และวางแผนก่อนจำหน่ายจริง</p>
+          </div>
+          <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1.5 rounded-lg font-medium">
+            ✅ ตอบโจทย์วัตถุประสงค์ข้อที่ 1 และ 2
+          </span>
+        </div>
+
+        <div id="crop-cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Smart Grading, Packaging & Revenue Planner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- Left: Controls -->
+          <div class="lg:col-span-7 space-y-5">
+            <div class="border-b border-slate-100 pb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md">
+                ระบบจำลองสหกรณ์การเกษตรดิจิทัล
+              </span>
+              <h4 class="text-xl font-bold text-slate-800 mt-2">
+                เครื่องมือวางแผนราคา คัดเกรดคุณภาพ และบรรจุภัณฑ์
+              </h4>
+              <p class="text-xs text-slate-500">
+                ช่วยให้เกษตรกรทราบราคาประเมินล่วงหน้า และเห็นมูลค่าเพิ่มจากการคัดเกรดและบรรจุภัณฑ์ของสหกรณ์
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">1. เลือกชนิดผลผลิต</label>
+                <select id="calc-crop" onchange="handleCropChange()" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-medium focus:ring-2 focus:ring-emerald-600 focus:outline-none">
+                  <option value="rice">🌾 ข้าวเปลือกหอมมะลิ</option>
+                  <option value="sugarcane">🎋 อ้อยโรงงาน</option>
+                  <option value="rubber">🌳 ยางพารา (ยางก้อนถ้วย/แผ่น)</option>
+                  <option value="palm">🌴 ปาล์มน้ำมัน</option>
+                  <option value="cassava">🥔 มันสำปะหลังสด</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">2. ปริมาณผลผลิตที่จะจำหน่าย (ตัน)</label>
+                <input type="number" id="calc-weight" value="5" min="0.5" step="0.5" oninput="calculateRevenue()" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-medium focus:ring-2 focus:ring-emerald-600 focus:outline-none" />
+              </div>
+            </div>
+
+            <!-- Dynamic Quality Grade Selector -->
+            <div>
+              <label id="grade-label" class="block text-xs font-semibold text-slate-700 mb-1.5">
+                3. ระดับการคัดเกรดคุณภาพสินค้า (เกณฑ์มาตรฐานสหกรณ์)
+              </label>
+              <div id="grade-options" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Packaging & Cooperative Value-Add Options -->
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+                4. รูปแบบการบรรจุภัณฑ์และการจัดการผ่านสหกรณ์
+              </label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <label class="cursor-pointer border rounded-xl p-3 flex flex-col justify-between bg-slate-50 border-slate-200 hover:border-emerald-500 transition">
+                  <div class="flex items-center gap-2">
+                    <input type="radio" name="pack-option" value="bulk" checked onchange="calculateRevenue()" class="text-emerald-600 focus:ring-emerald-500" />
+                    <span class="text-xs font-bold text-slate-800">เทกอง / ขายหน้าลาน</span>
+                  </div>
+                  <span class="text-[11px] text-slate-500 mt-1">ไม่มีค่าบรรจุภัณฑ์ ได้ราคามาตรฐานตามเกรด</span>
+                </label>
+
+                <label class="cursor-pointer border rounded-xl p-3 flex flex-col justify-between bg-slate-50 border-slate-200 hover:border-emerald-500 transition">
+                  <div class="flex items-center gap-2">
+                    <input type="radio" name="pack-option" value="coop_sack" onchange="calculateRevenue()" class="text-emerald-600 focus:ring-emerald-500" />
+                    <span class="text-xs font-bold text-slate-800">บรรจุกระสอบสหกรณ์</span>
+                  </div>
+                  <span class="text-[11px] text-emerald-700 mt-1">+เพิ่มมูลค่า 350 บ./ตัน (หักค่ากระสอบ 100 บ./ตัน)</span>
+                </label>
+
+                <label class="cursor-pointer border rounded-xl p-3 flex flex-col justify-between bg-slate-50 border-slate-200 hover:border-emerald-500 transition">
+                  <div class="flex items-center gap-2">
+                    <input type="radio" name="pack-option" value="premium_pack" onchange="calculateRevenue()" class="text-emerald-600 focus:ring-emerald-500" />
+                    <span class="text-xs font-bold text-slate-800">คัดพิเศษ + ติดตรา QR สหกรณ์</span>
+                  </div>
+                  <span class="text-[11px] text-emerald-700 mt-1">+เพิ่มมูลค่า 800 บ./ตัน (ตรวจสอบย้อนกลับได้)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Live Calculation Result Box -->
+          <div class="lg:col-span-5 bg-emerald-900 text-white rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+            <div>
+              <div class="flex items-center justify-between border-b border-emerald-700 pb-3">
+                <span class="text-xs font-medium text-emerald-200">สรุปแผนการจำหน่ายผลผลิต</span>
+                <span id="calc-crop-badge" class="bg-amber-400 text-amber-950 text-xs font-bold px-2.5 py-0.5 rounded-full">
+                  ข้าวเปลือกหอมมะลิ
+                </span>
+              </div>
+
+              <div class="mt-4 space-y-3 text-sm">
+                <div class="flex justify-between">
+                  <span class="text-emerald-200">ราคากลางฐาน (ต่อตัน):</span>
+                  <span id="res-base-price" class="font-semibold">15,200 บาท</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-emerald-200">ส่วนต่างจากการคัดเกรดคุณภาพ:</span>
+                  <span id="res-grade-diff" class="font-semibold text-amber-300">+0 บาท/ตัน</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-emerald-200">มูลค่าเพิ่มสุทธิจากบรรจุภัณฑ์:</span>
+                  <span id="res-pack-diff" class="font-semibold text-amber-300">+0 บาท/ตัน</span>
+                </div>
+                <div class="border-t border-emerald-700/80 pt-3 flex justify-between items-baseline">
+                  <span class="text-emerald-100 font-medium">ราคาสุทธิต่อตัน:</span>
+                  <span id="res-final-per-ton" class="text-lg font-bold text-white">15,200 บาท/ตัน</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 bg-emerald-950/70 rounded-xl p-4 border border-emerald-700">
+              <div class="text-xs text-emerald-300">รายได้สุทธิรวมทั้งหมดที่คาดว่าจะได้รับ</div>
+              <div id="res-total-income" class="text-3xl font-extrabold text-amber-400 mt-1">
+                76,000 บาท
+              </div>
+              <div id="res-coop-bonus" class="text-xs text-emerald-200 mt-1">
+                🎁 สิทธิพิเศษสมาชิกสหกรณ์: สะสมแต้มปันผลสหกรณ์ประมาณ 1,900 คะแนน
+              </div>
+            </div>
+
+            <div class="mt-4 flex flex-col sm:flex-row gap-2">
+              <button onclick="sendCalculatedToMarket()" class="w-full bg-amber-400 hover:bg-amber-300 text-amber-950 font-bold text-xs py-3 px-4 rounded-xl shadow transition">
+                📢 นำราคานี้ไปโพสต์ขายในตลาดสหกรณ์
+              </button>
+              <button onclick="switchTab('tab-labor')" class="w-full bg-emerald-800 hover:bg-emerald-700 text-white font-semibold text-xs py-3 px-4 rounded-xl border border-emerald-600 transition">
+                🚜 จองรถไถ / รถขนส่งผลผลิต
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TAB 2: FAIR PRICE NEGOTIATION & MARKETPLACE
+         (Connected to Google Sheet - นายพิเชษฐ์ชัย ประสมพลอย 062-418-1699)
+         ========================================== -->
+    <div id="tab-market" class="tab-content hidden space-y-6">
+      <!-- Google Sheet Coordinator Banner for Marketplace -->
+      <div class="bg-emerald-900 text-white p-5 rounded-2xl shadow-md border border-emerald-700 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div class="flex items-start sm:items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-700 border border-emerald-500 flex items-center justify-center text-2xl shrink-0">
+            📗
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="bg-amber-400 text-amber-950 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">
+                ● เชื่อมต่อ Google Sheet แล้ว
+              </span>
+              <span class="text-xs text-emerald-200 font-medium" id="market-sync-status">
+                อัปเดตข้อมูลล่าสุดจากตารางสหกรณ์เรียลไทม์
+              </span>
+            </div>
+            <h4 class="text-base sm:text-lg font-bold mt-1">
+              ผู้ดูแลฐานข้อมูล Google Sheet ตลาดซื้อ-ขาย: <span class="text-amber-300">นายพิเชษฐ์ชัย ประสมพลอย</span>
+            </h4>
+            <p class="text-xs text-emerald-100 mt-0.5">
+              📞 เบอร์โทรประสานงานกลาง / แจ้งลงประกาศซื้อ-ขาย: <a href="tel:0624181699" class="font-bold text-amber-300 underline">062-418-1699</a> (บันทึกทุกรายการลง Google Sheet อัตโนมัติ)
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 shrink-0 w-full lg:w-auto">
+          <button onclick="openGSheetModal('market')" class="flex-1 lg:flex-initial bg-white text-emerald-900 hover:bg-emerald-50 font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition flex items-center justify-center gap-1.5">
+            <span>📊</span> ดูตาราง Google Sheet / ตั้งค่าลิงก์
+          </button>
+          <button onclick="exportToCSV('market')" class="flex-1 lg:flex-initial bg-emerald-800 hover:bg-emerald-700 text-white border border-emerald-600 font-semibold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5">
+            <span>⬇️</span> ดาวน์โหลด CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <div>
+          <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-md font-semibold">
+            ✅ ตอบโจทย์วัตถุประสงค์ข้อที่ 3 (ต่อรองราคาเป็นธรรม & รวมกลุ่มขาย)
+          </span>
+          <h3 class="text-xl font-bold text-slate-800 mt-1.5">
+            กระดานซื้อ-ขายผลผลิต & ต่อรองราคาออนไลน์ในนามสหกรณ์
+          </h3>
+          <p class="text-xs text-slate-500">
+            มีราคากลางสหกรณ์กำกับทุกประกาศ ป้องกันการกดราคา พร้อมซิงค์ข้อมูลเข้ากับ Google Sheet ของ นายพิเชษฐ์ชัย ประสมพลอย (062-418-1699)
+          </p>
+        </div>
+        <button onclick="togglePostModal(true)" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-sm px-5 py-3 rounded-xl shadow-sm transition shrink-0">
+          + โพสต์ขายผลผลิต (บันทึกลง Google Sheet)
+        </button>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs font-semibold text-slate-600 mr-1">กรองตามพืช:</span>
+        <button onclick="filterMarket('all')" class="market-filter-btn bg-emerald-700 text-white text-xs font-semibold px-3.5 py-1.5 rounded-lg">ทั้งหมด</button>
+        <button onclick="filterMarket('ข้าวเปลือกหอมมะลิ')" class="market-filter-btn bg-white text-slate-700 border border-slate-200 text-xs font-semibold px-3.5 py-1.5 rounded-lg">🌾 ข้าว</button>
+        <button onclick="filterMarket('อ้อยโรงงาน')" class="market-filter-btn bg-white text-slate-700 border border-slate-200 text-xs font-semibold px-3.5 py-1.5 rounded-lg">🎋 อ้อย</button>
+        <button onclick="filterMarket('ยางพารา')" class="market-filter-btn bg-white text-slate-700 border border-slate-200 text-xs font-semibold px-3.5 py-1.5 rounded-lg">🌳 ยางพารา</button>
+        <button onclick="filterMarket('ปาล์มน้ำมัน')" class="market-filter-btn bg-white text-slate-700 border border-slate-200 text-xs font-semibold px-3.5 py-1.5 rounded-lg">🌴 ปาล์ม</button>
+        <button onclick="filterMarket('มันสำปะหลังสด')" class="market-filter-btn bg-white text-slate-700 border border-slate-200 text-xs font-semibold px-3.5 py-1.5 rounded-lg">🥔 มันสำปะหลัง</button>
+      </div>
+
+      <!-- Listings Grid -->
+      <div id="market-listings" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- ==========================================
+         TAB 3: AGRICULTURAL SERVICES & LABOR MATCHING
+         (Connected to Google Sheet + Expanded Shops with all 7 Members)
+         ========================================== -->
+    <div id="tab-labor" class="tab-content hidden space-y-6">
+      <!-- Google Sheet Database Banner for Service Providers & Shops -->
+      <div class="bg-emerald-900 text-white p-5 rounded-2xl shadow-md border border-emerald-700 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div class="flex items-start sm:items-center gap-3.5">
+          <div class="w-12 h-12 rounded-2xl bg-emerald-700 border border-emerald-500 flex items-center justify-center text-2xl shrink-0">
+            🚜
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="bg-amber-400 text-amber-950 text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">
+                ● เชื่อมต่อ Google Sheet ร้านค้าบริการแล้ว
+              </span>
+              <span class="text-xs text-emerald-200 font-medium">
+                ฐานข้อมูลร้านค้าและผู้ให้บริการสมาชิกสหกรณ์ครบทั้ง 7 ราย
+              </span>
+            </div>
+            <h4 class="text-base sm:text-lg font-bold mt-1">
+              ศูนย์รวมร้านค้าบริการเครื่องจักรกล รถขนส่ง โดรนเกษตร และแรงงานสหกรณ์ อ.นาตาล
+            </h4>
+            <p class="text-xs text-emerald-100 mt-0.5">
+              ดูแลโดย: บอส จีระศักดิ์ (094-712-6090) • โอม พลชนะ (094-573-0471) • พิเชษฐ์ชัย (062-418-1699) • นิด นันท์นภัส (082-230-9934) • แบม พรชนก (061-968-0515) • อุ๋งอิ๋ง ภาษิตา (082-261-4568) • ไอซ์ วิชญาดา (083-123-0474)
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 shrink-0 w-full lg:w-auto">
+          <button onclick="openGSheetModal('labor')" class="flex-1 lg:flex-initial bg-white text-emerald-900 hover:bg-emerald-50 font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition flex items-center justify-center gap-1.5">
+            <span>📊</span> ดูตาราง Google Sheet ร้านค้า
+          </button>
+          <button onclick="exportToCSV('labor')" class="flex-1 lg:flex-initial bg-emerald-800 hover:bg-emerald-700 text-white border border-emerald-600 font-semibold text-xs px-3.5 py-2.5 rounded-xl transition flex items-center justify-center gap-1.5">
+            <span>⬇️</span> ดาวน์โหลด CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Top Banner with Group Booking Innovation -->
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-md font-semibold">
+              ✅ ตอบโจทย์วัตถุประสงค์ข้อที่ 5 (ศูนย์กลางประสานงานผู้ให้บริการและร้านค้าเกษตรครบวงจร)
+            </span>
+            <h3 class="text-xl font-bold text-slate-800 mt-1.5">
+              ระบบจองคิวรถไถ รถเกี่ยว รถขนส่ง โดรนเกษตร ร้านคัดเกรด และกรรมกรรับจ้าง
+            </h3>
+            <p class="text-xs text-slate-500">
+              รวมร้านค้าและบริการที่หลากหลายของสมาชิกสหกรณ์ในพื้นที่ อ.นาตาล พร้อมเบอร์ติดต่อโดยตรงและระบบบันทึกคิวลง Google Sheets
+            </p>
+          </div>
+
+          <!-- Service Type Filter (Expanded Variety) -->
+          <div class="flex flex-wrap gap-2">
+            <button onclick="filterLabor('all')" class="labor-filter-btn bg-emerald-700 text-white text-xs font-semibold px-3.5 py-2 rounded-xl">ทั้งหมด (8 ร้านค้า)</button>
+            <button onclick="filterLabor('รถไถ/พรวนดิน')" class="labor-filter-btn bg-slate-100 text-slate-700 text-xs font-semibold px-3.5 py-2 rounded-xl">🚜 รถไถ/พรวนดิน</button>
+            <button onclick="filterLabor('รถเกี่ยว/เก็บเกี่ยว')" class="labor-filter-btn bg-slate-100 text-slate-700 text-xs font-semibold px-3.5 py-2 rounded-xl">🌾 รถเกี่ยว/ตัดอ้อย</button>
+            <button onclick="filterLabor('แรงงานเกษตร')" class="labor-filter-btn bg-slate-100 text-slate-700 text-xs font-semibold px-3.5 py-2 rounded-xl">👷 ทีมแรงงาน/กรีดยาง</button>
+            <button onclick="filterLabor('รถขนส่งผลผลิต')" class="labor-filter-btn bg-slate-100 text-slate-700 text-xs font-semibold px-3.5 py-2 rounded-xl">🚚 รถขนส่งผลผลิต</button>
+            <button onclick="filterLabor('โดรนเกษตร/พ่นปุ๋ย')" class="labor-filter-btn bg-slate-100 text-slate-700 text-xs font-semibold px-3.5 py-2 rounded-xl">🚁 โดรนเกษตร/ปุ๋ย-ยา</button>
+            <button onclick="filterLabor('ร้านคัดเกรด/บรรจุภัณฑ์')" class="labor-filter-btn bg-slate-100 text-slate-700 text-xs font-semibold px-3.5 py-2 rounded-xl">📦 คัดเกรด/อบแห้ง/กระสอบ</button>
+          </div>
+        </div>
+
+        <!-- Group Queue Sharing Highlight Box -->
+        <div class="mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🤝</span>
+            <div>
+              <div class="text-xs font-bold text-amber-900">ฟีเจอร์สหกรณ์: "รวมแปลงใกล้เคียง จองคิวพร้อมกัน ลดค่าจ้าง 10%"</div>
+              <div class="text-[11px] text-amber-800">ขณะนี้มีเกษตรกรใน <strong>ต.พะลาน และ ต.นาตาล</strong> กำลังเปิดรับเพื่อนร่วมคิวรถไถ รถเกี่ยว และโดรนพ่นปุ๋ย</div>
+            </div>
+          </div>
+          <label class="inline-flex items-center gap-2 cursor-pointer bg-white px-3 py-1.5 rounded-lg border border-amber-300 text-xs font-semibold text-amber-900 shrink-0">
+            <input type="checkbox" id="group-discount-toggle" onchange="renderLabor()" checked class="text-emerald-600 rounded" />
+            <span>เปิดใช้ส่วนลดรวมแปลงสหกรณ์ (-10%)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Service Providers Grid -->
+      <div id="labor-listings" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==========================================
+       MODAL 1: PRICE NEGOTIATION MODAL
+       ========================================== -->
+  <div id="negotiate-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex justify-between items-start border-b border-slate-100 pb-3">
+        <div>
+          <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">ระบบต่อรองราคาเป็นธรรม</span>
+          <h4 id="neg-title" class="text-lg font-bold text-slate-800 mt-1">ยื่นข้อเสนอซื้อและต่อรองราคา</h4>
+        </div>
+        <button onclick="closeNegotiateModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="bg-slate-50 rounded-xl p-3.5 text-xs space-y-1.5 border border-slate-200">
+        <div class="flex justify-between">
+          <span class="text-slate-500">ผู้ประกาศขาย:</span>
+          <span id="neg-seller" class="font-semibold text-slate-800">-</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">ราคาที่ผู้ขายตั้งไว้:</span>
+          <span id="neg-ask-price" class="font-bold text-emerald-700">-</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">กรอบราคาเป็นธรรมของสหกรณ์ (ห้ามต่ำกว่า):</span>
+          <span id="neg-min-fair" class="font-semibold text-amber-700">-</span>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">ราคาที่คุณต้องการเสนอต่อรอง (บาท/ตัน)</label>
+          <input type="number" id="neg-offer-input" class="w-full rounded-xl border border-slate-300 px-3.5 py-2.5 text-sm font-bold text-slate-800 focus:ring-2 focus:ring-emerald-600 focus:outline-none" />
+          <p id="neg-fairness-msg" class="text-[11px] mt-1 text-emerald-700 font-medium">
+            ✅ ราคานี้อยู่ในเกณฑ์ที่เป็นธรรมแก่ทั้งผู้ซื้อและผู้ขาย
+          </p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">ข้อความถึงผู้ขาย / เงื่อนไขการรับสินค้า</label>
+          <textarea id="neg-note" rows="2" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-600 focus:outline-none" placeholder="เช่น มีรถไปรับถึงที่ใน ต.นาตาล จ่ายเงินสดทันทีหน้าลานสหกรณ์"></textarea>
+        </div>
+      </div>
+
+      <div class="flex gap-2 pt-2">
+        <button onclick="submitNegotiation()" class="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs py-3 rounded-xl shadow transition">
+          ส่งข้อเสนอต่อรองราคา
+        </button>
+        <button onclick="closeNegotiateModal()" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
+          ยกเลิก
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL 2: NEW PRODUCE LISTING MODAL
+       ========================================== -->
+  <div id="post-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex justify-between items-start border-b border-slate-100 pb-3">
+        <div>
+          <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">สมาชิกสหกรณ์การเกษตร</span>
+          <h4 class="text-lg font-bold text-slate-800 mt-1">ประกาศจำหน่ายผลผลิตทางการเกษตร</h4>
+        </div>
+        <button onclick="togglePostModal(false)" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">ชื่อผู้ขาย / ผู้ประสานงานสหกรณ์</label>
+          <input type="text" id="post-seller" value="นายพิเชษฐ์ชัย ประสมพลอย (ผู้ประสานงานสหกรณ์)" class="w-full rounded-xl border border-slate-300 px-3 py-2" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">เบอร์โทรศัพท์ติดต่อ</label>
+            <input type="text" id="post-phone" value="062-418-1699" class="w-full rounded-xl border border-slate-300 px-3 py-2 font-bold text-emerald-800" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">ชนิดผลผลิต (5 พืชหลัก)</label>
+            <select id="post-crop" class="w-full rounded-xl border border-slate-300 px-3 py-2">
+              <option value="ข้าวเปลือกหอมมะลิ">🌾 ข้าวเปลือกหอมมะลิ</option>
+              <option value="อ้อยโรงงาน">🎋 อ้อยโรงงาน</option>
+              <option value="ยางพารา">🌳 ยางพารา</option>
+              <option value="ปาล์มน้ำมัน">🌴 ปาล์มน้ำมัน</option>
+              <option value="มันสำปะหลังสด">🥔 มันสำปะหลังสด</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">ปริมาณ (ตัน)</label>
+            <input type="number" id="post-tons" value="5" min="1" class="w-full rounded-xl border border-slate-300 px-3 py-2" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">ราคาขาย (บ./ตัน)</label>
+            <input type="number" id="post-price" value="15500" class="w-full rounded-xl border border-slate-300 px-3 py-2 font-bold text-emerald-800" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">พื้นที่ (อ.นาตาล)</label>
+            <select id="post-area" class="w-full rounded-xl border border-slate-300 px-3 py-2">
+              <option value="ต.นาตาล อ.นาตาล">ต.นาตาล</option>
+              <option value="ต.พะลาน อ.นาตาล">ต.พะลาน</option>
+              <option value="ต.กองโพน อ.นาตาล">ต.กองโพน</option>
+              <option value="ต.พังเคน อ.นาตาล">ต.พังเคน</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">รายละเอียดการคัดเกรดและบรรจุภัณฑ์</label>
+          <input type="text" id="post-grade" value="เกรด A คัดคุณภาพความชื้น 15% บรรจุกระสอบสหกรณ์" class="w-full rounded-xl border border-slate-300 px-3 py-2" />
+        </div>
+      </div>
+
+      <div class="flex gap-2 pt-2">
+        <button onclick="addNewMarketPost()" class="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs py-3 rounded-xl shadow transition">
+          บันทึกประกาศขึ้นเว็บไซต์ & Google Sheet
+        </button>
+        <button onclick="togglePostModal(false)" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
+          ยกเลิก
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL 3: LABOR / TRACTOR BOOKING MODAL
+       ========================================== -->
+  <div id="booking-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex justify-between items-start border-b border-slate-100 pb-3">
+        <div>
+          <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">ระบบประสานงานจ้างงานเกษตร (เชื่อม Google Sheet)</span>
+          <h4 id="book-provider-name" class="text-lg font-bold text-slate-800 mt-1">จองคิวผู้ให้บริการ</h4>
+          <p id="book-provider-owner" class="text-xs text-emerald-700 font-semibold mt-0.5">-</p>
+        </div>
+        <button onclick="closeBookingModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">ชื่อผู้ว่าจ้าง (เกษตรกร)</label>
+            <input type="text" id="book-customer-name" value="สมาชิกเกษตรกร อ.นาตาล" class="w-full rounded-xl border border-slate-300 px-3 py-2" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">เบอร์โทรผู้ว่าจ้าง</label>
+            <input type="text" id="book-customer-phone" placeholder="เช่น 08x-xxx-xxxx" value="089-555-1234" class="w-full rounded-xl border border-slate-300 px-3 py-2" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">จำนวนพื้นที่ / ปริมาณงาน (<span id="book-unit-label">ไร่</span>)</label>
+            <input type="number" id="book-amount" value="10" min="1" oninput="updateBookingTotal()" class="w-full rounded-xl border border-slate-300 px-3 py-2 font-bold" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">วันที่ต้องการนัดหมาย</label>
+            <input type="date" id="book-date" value="2026-11-20" class="w-full rounded-xl border border-slate-300 px-3 py-2" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">พิกัดแปลงเกษตรของคุณ</label>
+          <input type="text" id="book-location" value="บ้านนาตาล ต.นาตาล อ.นาตาล" class="w-full rounded-xl border border-slate-300 px-3 py-2" />
+        </div>
+
+        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 space-y-1">
+          <div class="flex justify-between text-slate-600">
+            <span>อัตราค่าบริการปกติ:</span>
+            <span id="book-rate-display" class="font-semibold">-</span>
+          </div>
+          <div class="flex justify-between text-emerald-700">
+            <span>ส่วนลดรวมแปลงสหกรณ์ (แชร์คิวพื้นที่ใกล้เคียง):</span>
+            <span id="book-discount-display" class="font-semibold">-</span>
+          </div>
+          <div class="border-t border-emerald-200 pt-2 flex justify-between items-baseline">
+            <span class="font-bold text-slate-800">ค่าจ้างประเมินสุทธิ:</span>
+            <span id="book-total-display" class="text-lg font-extrabold text-emerald-800">-</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-2 pt-2">
+        <button onclick="confirmLaborBooking()" class="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs py-3 rounded-xl shadow transition">
+          ✅ ยืนยันการจองคิว & บันทึกลง Google Sheet
+        </button>
+        <button onclick="closeBookingModal()" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL 4: GOOGLE SHEETS INTEGRATION & LIVE VIEWER
+       ========================================== -->
+  <div id="gsheet-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-4xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex justify-between items-start border-b border-slate-200 pb-3">
+        <div>
+          <span class="text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">
+            📗 ระบบเชื่อมต่อฐานข้อมูล Google Sheets
+          </span>
+          <h4 class="text-lg font-bold text-slate-800 mt-1" id="gsheet-modal-title">
+            ตารางฐานข้อมูล Google Sheet สหกรณ์การเกษตร อ.นาตาล
+          </h4>
+          <p class="text-xs text-slate-500">
+            ผู้ดูแลตารางตลาดซื้อ-ขาย: <strong>นายพิเชษฐ์ชัย ประสมพลอย (062-418-1699)</strong> • ร่วมกับเครือข่ายร้านค้าสมาชิกทั้ง 7 ราย
+          </p>
+        </div>
+        <button onclick="closeGSheetModal()" class="text-slate-400 hover:text-slate-600 text-2xl font-bold leading-none">&times;</button>
+      </div>
+
+      <!-- Sheet Switcher Tabs inside Modal -->
+      <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-100 p-2 rounded-xl">
+        <div class="flex flex-wrap gap-2">
+          <button onclick="switchGSheetView('market')" id="gsheet-tab-market" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-700 text-white">
+            🌾 Sheet 1: ตลาดซื้อ-ขาย (นายพิเชษฐ์ชัย 062-418-1699)
+          </button>
+          <button onclick="switchGSheetView('labor')" id="gsheet-tab-labor" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-700">
+            🚜 Sheet 2: ร้านค้าบริการเกษตร (สมาชิก 7 ราย)
+          </button>
+          <button onclick="switchGSheetView('bookings')" id="gsheet-tab-bookings" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-700">
+            📋 Sheet 3: ประวัติการจองคิว/ต่อรองราคา
+          </button>
+        </div>
+        <button onclick="exportCurrentSheetCSV()" class="bg-amber-400 hover:bg-amber-300 text-amber-950 font-bold text-xs px-3 py-1.5 rounded-lg transition">
+          ⬇️ ส่งออกไฟล์ .CSV ไปเปิดใน Google Sheet
+        </button>
+      </div>
+
+      <!-- Optional Live Google Sheet URL / Webhook Config -->
+      <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-3.5 text-xs space-y-2">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="font-bold text-emerald-900">
+            🔗 ลิงก์เชื่อมต่อ Google Sheet / Google Apps Script Web App URL (สำหรับซิงค์ข้อมูลออนไลน์):
+          </div>
+          <span id="gsheet-conn-badge" class="text-[11px] font-bold text-emerald-700 bg-white px-2.5 py-0.5 rounded border border-emerald-200">
+            ● พร้อมใช้งาน (โหมดตารางสหกรณ์อัตโนมัติ)
+          </span>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input type="text" id="gsheet-url-input" placeholder="วางลิงก์ Google Sheet CSV หรือ Apps Script Web App URL ที่นี่ (ถ้ามี)..." class="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-xs bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600" />
+          <button onclick="saveGSheetUrl()" class="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-4 py-2 rounded-lg transition shrink-0">
+            บันทึกและซิงค์ข้อมูล
+          </button>
+        </div>
+      </div>
+
+      <!-- Data Table Preview (Looks like Google Sheet) -->
+      <div class="overflow-auto border border-slate-200 rounded-xl flex-grow bg-white">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead id="gsheet-table-head" class="bg-emerald-900 text-white sticky top-0">
+          </thead>
+          <tbody id="gsheet-table-body" class="divide-y divide-slate-200">
+          </tbody>
+        </table>
+      </div>
+
+      <div class="flex justify-between items-center pt-1 text-[11px] text-slate-500">
+        <span>💡 ทุกครั้งที่มีการโพสต์ขาย ต่อรองราคา หรือกดจองคิวรถไถ ข้อมูลจะถูกเพิ่มลงในตารางนี้ทันที</span>
+        <button onclick="closeGSheetModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold px-4 py-2 rounded-xl transition">
+          ปิดหน้าต่าง
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-5 right-5 bg-emerald-900 text-white px-5 py-3.5 rounded-2xl shadow-xl border border-emerald-700 text-xs font-medium hidden z-50 flex items-center gap-2.5">
+    <span class="text-lg">✅</span>
+    <span id="toast-msg">ดำเนินการสำเร็จ</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div>
+        <strong class="text-emerald-900">โครงงานเรื่อง ALL IN ONE การเกษตร</strong> — แบบจำลองสหกรณ์การเกษตรดิจิทัล พื้นที่อำเภอนาตาล และอำเภอใกล้เคียง
+      </div>
+      <div class="text-right">
+        ผู้ประสานงานตลาด: นายพิเชษฐ์ชัย ประสมพลอย (062-418-1699) • เชื่อมต่อระบบ Google Sheets
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // =====================================================
+    // GROUP MEMBERS DIRECTORY (All 7 Members from User Prompt)
+    // =====================================================
+    const groupMembers = [
+      { no: 1, fullName: 'นายจีระศักดิ์ แสงอร่าม', nickname: 'บอส', phone: '094-712-6090', role: 'บริการรถบรรทุกและกระบะคอกขนส่งผลผลิต' },
+      { no: 2, fullName: 'นายพลชนะ ชาตรี', nickname: 'โอม', phone: '094-573-0471', role: 'บริการรถไถฟอร์ด & คูโบต้า เตรียมดิน-ยกร่อง' },
+      { no: 3, fullName: 'นายพิเชษฐ์ชัย ประสมพลอย', nickname: 'พิเชษฐ์', phone: '062-418-1699', role: 'ผู้ดูแลระบบตลาดซื้อ-ขาย Google Sheet & รถเกี่ยวข้าว-ตัดอ้อย' },
+      { no: 4, fullName: 'นางสาวนันท์นภัส เหล่ามั่น', nickname: 'นิด', phone: '082-230-9934', role: 'หัวหน้าทีมแรงงานเกษตรสามัคคี (หว่าน/ปลูก/เก็บเกี่ยว)' },
+      { no: 5, fullName: 'นางสาวพรชนก พ่อบาล', nickname: 'แบม', phone: '061-968-0515', role: 'ร้านบริการโดรนเกษตรพ่นปุ๋ย-ฮอร์โมน & ฟาร์มอ้อยสด' },
+      { no: 6, fullName: 'นางสาวภาษิตา วงศ์ด้วง', nickname: 'อุ๋งอิ๋ง', phone: '082-261-4568', role: 'ทีมช่างกรีดยางพารา & แทงปาล์มน้ำมันคัดเกรด' },
+      { no: 7, fullName: 'นางสาววิชญาดา มิ่งมูล', nickname: 'ไอซ์', phone: '083-123-0474', role: 'ร้านบริการคัดเกรด อบลดความชื้น & บรรจุกระสอบสหกรณ์' }
+    ];
+
+    let googleSheetWebhookUrl = '';
+    let activeGSheetTab = 'market';
+    let activityLogs = [
+      { timestamp: '17/11/2569 09:30', type: 'ซิงค์ตารางตลาด', detail: 'เชื่อมตารางตลาดซื้อ-ขาย (นายพิเชษฐ์ชัย ประสมพลอย 062-418-1699)', contact: '062-418-1699' },
+      { timestamp: '17/11/2569 10:15', type: 'จองคิวรถไถ', detail: 'จองทีมรถไถช่างโอม พลชนะ ชาตรี จำนวน 12 ไร่ ต.นาตาล', contact: '094-573-0471' }
+    ];
+
+    // =====================================================
+    // 1. DATA FOR 5 ECONOMIC CROPS & GRADING (From PDF Scope)
+    // =====================================================
+    const cropsData = {
+      rice: {
+        id: 'rice',
+        name: 'ข้าวเปลือกหอมมะลิ',
+        shortName: 'ข้าว',
+        icon: '🌾',
+        basePricePerTon: 15200,
+        unitText: '15,200 บ./ตัน',
+        trend: '+150 บ.',
+        qualityStandard: 'ความชื้นมาตรฐาน 15%',
+        grades: [
+          { label: 'เกรด A (ความชื้น ≤ 15% เมล็ดสมบูรณ์)', diff: 600, desc: '+600 บ./ตัน (ผ่านเกณฑ์สหกรณ์ชั้นดี)' },
+          { label: 'เกรดมาตรฐาน (ความชื้น 15-17%)', diff: 0, desc: 'ราคากลางมาตรฐาน 0 บ./ตัน' },
+          { label: 'เกรดคละ/ข้าวเกี่ยวสด (ความชื้น > 20%)', diff: -1400, desc: '-1,400 บ./ตัน (หักความชื้นก่อนอบ)' }
+        ]
+      },
+      sugarcane: {
+        id: 'sugarcane',
+        name: 'อ้อยโรงงาน',
+        shortName: 'อ้อย',
+        icon: '🎋',
+        basePricePerTon: 1420,
+        unitText: '1,420 บ./ตัน',
+        trend: '+20 บ.',
+        qualityStandard: 'ความหวาน 10 CCS',
+        grades: [
+          { label: 'เกรด A (อ้อยสดสะอาด ความหวาน > 12 CCS)', diff: 180, desc: '+180 บ./ตัน (โบนัสอ้อยสดไร้ใบ)' },
+          { label: 'เกรดมาตรฐาน (อ้อยสด 10 CCS)', diff: 0, desc: 'ราคากลางมาตรฐาน 0 บ./ตัน' },
+          { label: 'เกรดคละ (มีสิ่งเจือปน/อ้อยไฟไหม้)', diff: -130, desc: '-130 บ./ตัน (หักตามเกณฑ์โรงงาน)' }
+        ]
+      },
+      rubber: {
+        id: 'rubber',
+        name: 'ยางพารา',
+        shortName: 'ยางพารา',
+        icon: '🌳',
+        basePricePerTon: 34500,
+        unitText: '34.50 บ./กก. (34,500 บ./ตัน)',
+        trend: '+0.50 บ.',
+        qualityStandard: 'ยางก้อนถ้วย DRC 50%',
+        grades: [
+          { label: 'ยางแผ่นรมควันชั้นดี / ยางก้อนถ้วยสะอาดพิเศษ', diff: 4500, desc: '+4,500 บ./ตัน (+4.50 บ./กก.)' },
+          { label: 'ยางก้อนถ้วยมาตรฐานสหกรณ์ (DRC 50%)', diff: 0, desc: 'ราคากลางมาตรฐาน 0 บ./ตัน' },
+          { label: 'ยางก้อนถ้วยมีเปลือกไม้/ความชื้นสูง', diff: -3000, desc: '-3,000 บ./ตัน (-3.00 บ./กก.)' }
+        ]
+      },
+      palm: {
+        id: 'palm',
+        name: 'ปาล์มน้ำมัน',
+        shortName: 'ปาล์ม',
+        icon: '🌴',
+        basePricePerTon: 6400,
+        unitText: '6.40 บ./กก. (6,400 บ./ตัน)',
+        trend: 'คงที่',
+        qualityStandard: 'ปาล์มทะลายสุก น้ำมัน 18%',
+        grades: [
+          { label: 'เกรด A (ทะลายสุกจัด เปอร์เซ็นต์น้ำมัน > 20%)', diff: 600, desc: '+600 บ./ตัน (+0.60 บ./กก.)' },
+          { label: 'เกรดมาตรฐาน (น้ำมัน 18%)', diff: 0, desc: 'ราคากลางมาตรฐาน 0 บ./ตัน' },
+          { label: 'เกรดคละ (ปาล์มดิบปน / ก้านยาว)', diff: -500, desc: '-500 บ./ตัน (-0.50 บ./กก.)' }
+        ]
+      },
+      cassava: {
+        id: 'cassava',
+        name: 'มันสำปะหลังสด',
+        shortName: 'มันสำปะหลัง',
+        icon: '🥔',
+        basePricePerTon: 3150,
+        unitText: '3.15 บ./กก. (3,150 บ./ตัน)',
+        trend: '+0.10 บ.',
+        qualityStandard: 'เชื้อแป้ง 25%',
+        grades: [
+          { label: 'เกรด A (หัวมันสะอาด วัดเชื้อแป้งได้ 30%)', diff: 350, desc: '+350 บ./ตัน (สะอาดไร้ดินปน)' },
+          { label: 'เกรดมาตรฐาน (เชื้อแป้ง 25%)', diff: 0, desc: 'ราคากลางมาตรฐาน 0 บ./ตัน' },
+          { label: 'เกรดคละ (เชื้อแป้งต่ำกว่า 20% / มีดินปน)', diff: -350, desc: '-350 บ./ตัน (หักดินและแป้งต่ำ)' }
+        ]
+      }
+    };
+
+    let selectedCropKey = 'rice';
+    let selectedGradeIndex = 0;
+
+    // =====================================================
+    // 2. MARKETPLACE LISTINGS DATA (Tab 2)
+    // Connected to Google Sheet - นายพิเชษฐ์ชัย ประสมพลอย (062-418-1699)
+    // =====================================================
+    let marketListings = [
+      {
+        id: 101,
+        crop: 'ข้าวเปลือกหอมมะลิ',
+        icon: '🌾',
+        seller: 'นายพิเชษฐ์ชัย ประสมพลอย (ผู้ประสานงานกลุ่มสหกรณ์บ้านนาตาล)',
+        phone: '062-418-1699',
+        area: 'ต.นาตาล อ.นาตาล',
+        tons: 18,
+        askPrice: 15800,
+        fairMinPrice: 15100,
+        gradeInfo: 'เกรด A ความชื้น 14.5% บรรจุกระสอบสหกรณ์พร้อมขนส่ง',
+        isGroupPool: true,
+        offersCount: 3,
+        latestOffer: 15650
+      },
+      {
+        id: 102,
+        crop: 'มันสำปะหลังสด',
+        icon: '🥔',
+        seller: 'นายจีระศักดิ์ แสงอร่าม (บอส) & ลานรวบรวมสหกรณ์',
+        phone: '094-712-6090',
+        area: 'ต.พะลาน อ.นาตาล',
+        tons: 8,
+        askPrice: 3400,
+        fairMinPrice: 3100,
+        gradeInfo: 'เกรด A วัดเชื้อแป้ง 28-30% คัดเหง้าสะอาด (ประสานงานกลาง: นายพิเชษฐ์ชัย 062-418-1699)',
+        isGroupPool: false,
+        offersCount: 2,
+        latestOffer: 3300
+      },
+      {
+        id: 103,
+        crop: 'ยางพารา',
+        icon: '🌳',
+        seller: 'น.ส.ภาษิตา วงศ์ด้วง (อุ๋งอิ๋ง) กลุ่มชาวสวนยาง ต.กองโพน',
+        phone: '082-261-4568',
+        area: 'ต.กองโพน อ.นาตาล',
+        tons: 4.5,
+        askPrice: 36000,
+        fairMinPrice: 34000,
+        gradeInfo: 'ยางก้อนถ้วยสะอาดพิเศษ ปลอดสิ่งเจือปน คัดเกรดสหกรณ์',
+        isGroupPool: true,
+        offersCount: 4,
+        latestOffer: 35500
+      },
+      {
+        id: 104,
+        crop: 'อ้อยโรงงาน',
+        icon: '🎋',
+        seller: 'น.ส.พรชนก พ่อบาล (แบม) ฟาร์มอ้อยสด & นายพิเชษฐ์ชัย',
+        phone: '061-968-0515',
+        area: 'ต.พังเคน อ.นาตาล',
+        tons: 25,
+        askPrice: 1550,
+        fairMinPrice: 1400,
+        gradeInfo: 'อ้อยสดตัดสะอาด 100% ค่าความหวานประมาณ 11.5 CCS',
+        isGroupPool: false,
+        offersCount: 1,
+        latestOffer: 1500
+      },
+      {
+        id: 105,
+        crop: 'ปาล์มน้ำมัน',
+        icon: '🌴',
+        seller: 'นายพิเชษฐ์ชัย ประสมพลอย (ศูนย์รวบรวมปาล์มสหกรณ์ อ.นาตาล)',
+        phone: '062-418-1699',
+        area: 'ต.นาตาล อ.นาตาล',
+        tons: 6,
+        askPrice: 6700,
+        fairMinPrice: 6300,
+        gradeInfo: 'ปาล์มทะลายสุกคัดเกรด A ตัดสดใหม่พร้อมส่งโรงสกัด',
+        isGroupPool: true,
+        offersCount: 2,
+        latestOffer: 6550
+      },
+      {
+        id: 106,
+        crop: 'ข้าวเปลือกหอมมะลิ',
+        icon: '🌾',
+        seller: 'น.ส.วิชญาดา มิ่งมูล (ไอซ์) & น.ส.นันท์นภัส เหล่ามั่น (นิด)',
+        phone: '083-123-0474',
+        area: 'ต.พะลาน อ.นาตาล',
+        tons: 12,
+        askPrice: 15600,
+        fairMinPrice: 15000,
+        gradeInfo: 'ข้าวเปลือกหอมมะลิคัดพิเศษ อบลดความชื้นมาตรฐาน ติดตรา QR สหกรณ์',
+        isGroupPool: true,
+        offersCount: 2,
+        latestOffer: 15450
+      }
+    ];
+
+    let activeNegotiationId = null;
+
+    // =====================================================
+    // 3. LABOR & AGRICULTURAL SERVICE PROVIDERS (Tab 3)
+    // Expanded variety of shops/services with all 7 group members
+    // =====================================================
+    let laborProviders = [
+      {
+        id: 201,
+        name: 'อู่รถไถช่างโอม พลชนะ ชาตรี (รถไถฟอร์ด & คูโบต้า 2 คัน)',
+        owner: 'นายพลชนะ ชาตรี (ชื่อเล่น: โอม)',
+        phone: '094-573-0471',
+        category: 'รถไถ/พรวนดิน',
+        icon: '🚜',
+        serviceArea: 'ต.นาตาล, ต.พะลาน และทั่ว อ.นาตาล',
+        baseRate: 350,
+        unit: 'ไร่',
+        status: 'คิวว่างพรุ่งนี้',
+        rating: '4.9 ★ (42 งาน)',
+        equipment: 'บริการไถดะ, ไถแปร, ตีดินพรวนดิน, ยกร่องมันสำปะหลังและอ้อย ฝีมือละเอียด',
+        bookedCount: 14
+      },
+      {
+        id: 202,
+        name: 'รถเกี่ยวข้าว-ตัดอ้อยสด พิเชษฐ์ชัยบริการ',
+        owner: 'นายพิเชษฐ์ชัย ประสมพลอย',
+        phone: '062-418-1699',
+        category: 'รถเกี่ยว/เก็บเกี่ยว',
+        icon: '🌾',
+        serviceArea: 'ต.กองโพน, ต.นาตาล, อ.เขมราฐ',
+        baseRate: 600,
+        unit: 'ไร่',
+        status: 'กำลังรวมแปลง ต.นาตาล',
+        rating: '4.9 ★ (39 งาน)',
+        equipment: 'รถเกี่ยวข้าวขนาดใหญ่และรถตัดอ้อยสด เมล็ดไม่ร่วงเสียหาย มีรถพ่วงรับส่ง',
+        bookedCount: 21
+      },
+      {
+        id: 203,
+        name: 'รถหกล้อ-กระบะคอกขนส่งผลผลิต บอส จีระศักดิ์ ทรานสปอร์ต',
+        owner: 'นายจีระศักดิ์ แสงอร่าม (ชื่อเล่น: บอส)',
+        phone: '094-712-6090',
+        category: 'รถขนส่งผลผลิต',
+        icon: '🚚',
+        serviceArea: 'รับจากแปลงใน อ.นาตาล ส่งถึงทุกโรงสี/ลานรับซื้อ',
+        baseRate: 200,
+        unit: 'ตัน',
+        status: 'พร้อมวิ่งงานวันนี้',
+        rating: '5.0 ★ (64 งาน)',
+        equipment: 'รถกระบะคอกและรถบรรทุก 6 ล้อดั๊มพ์ มีผ้าใบคลุมกันฝน พร้อมทีมยกกระสอบ',
+        bookedCount: 40
+      },
+      {
+        id: 204,
+        name: 'กลุ่มแรงงานเกษตรสามัคคี บ้านพะลาน (ทีมพี่นิด 8 คน)',
+        owner: 'นางสาวนันท์นภัส เหล่ามั่น (ชื่อเล่น: นิด)',
+        phone: '082-230-9934',
+        category: 'แรงงานเกษตร',
+        icon: '👷',
+        serviceArea: 'ต.พะลาน, ต.พังเคน, ต.นาตาล',
+        baseRate: 400,
+        unit: 'คน/วัน',
+        status: 'พร้อมรับงานทันที',
+        rating: '5.0 ★ (56 งาน)',
+        equipment: 'รับจ้างหว่านข้าว หว่านปุ๋ย ปลูก-ขุดมันสำปะหลัง ตัดอ้อยสด และเก็บเกี่ยวผลผลิต',
+        bookedCount: 33
+      },
+      {
+        id: 205,
+        name: 'ร้านโดรนเกษตรพ่นปุ๋ย-ฮอร์โมน แบม พรชนก อะกริเทค',
+        owner: 'นางสาวพรชนก พ่อบาล (ชื่อเล่น: แบม)',
+        phone: '061-968-0515',
+        category: 'โดรนเกษตร/พ่นปุ๋ย',
+        icon: '🚁',
+        serviceArea: 'ทุกตำบลใน อ.นาตาล และพื้นที่ใกล้เคียง',
+        baseRate: 120,
+        unit: 'ไร่',
+        status: 'คิวว่างพร้อมบิน',
+        rating: '4.9 ★ (48 งาน)',
+        equipment: 'บริการโดรนเกษตรพ่นปุ๋ยน้ำ ฮอร์โมนพืช และสารชีวภาพสำหรับนาข้าว อ้อย มันสำปะหลัง รวดเร็วประหยัดยา',
+        bookedCount: 29
+      },
+      {
+        id: 206,
+        name: 'ทีมช่างกรีดยางและแทงปาล์มชำนาญงาน อุ๋งอิ๋ง การเกษตร',
+        owner: 'นางสาวภาษิตา วงศ์ด้วง (ชื่อเล่น: อุ๋งอิ๋ง)',
+        phone: '082-261-4568',
+        category: 'แรงงานเกษตร',
+        icon: '🌳',
+        serviceArea: 'ทุกตำบลใน อ.นาตาล และ อ.โพธิ์ไทร',
+        baseRate: 250,
+        unit: 'ไร่',
+        status: 'คิวว่างสัปดาห์นี้',
+        rating: '4.9 ★ (28 งาน)',
+        equipment: 'รับจ้างกรีดยางพาราหน้ายางไม่ช้ำ หยอดกรดมาตรฐาน และแทงทะลายปาล์มสุกคัดเกรด',
+        bookedCount: 18
+      },
+      {
+        id: 207,
+        name: 'ร้านคัดเกรด อบลดความชื้น & บรรจุภัณฑ์สหกรณ์ ไอซ์ วิชญาดา',
+        owner: 'นางสาววิชญาดา มิ่งมูล (ชื่อเล่น: ไอซ์)',
+        phone: '083-123-0474',
+        category: 'ร้านคัดเกรด/บรรจุภัณฑ์',
+        icon: '📦',
+        serviceArea: 'ศูนย์สหกรณ์ ต.นาตาล อ.นาตาล',
+        baseRate: 250,
+        unit: 'ตัน',
+        status: 'เปิดบริการทุกวัน',
+        rating: '5.0 ★ (51 งาน)',
+        equipment: 'บริการเครื่องวัดความชื้นข้าว/วัดแป้งมัน คัดแยกสิ่งเจือปน ลานตาก/อบแห้ง และจำหน่ายกระสอบสหกรณ์ติด QR',
+        bookedCount: 37
+      },
+      {
+        id: 208,
+        name: 'ร้านรถอัดฟางก้อน & เครื่องปลูกมันสำปะหลัง สหกรณ์นาตาล',
+        owner: 'นายพลชนะ (โอม) & นายจีระศักดิ์ (บอส)',
+        phone: '094-573-0471',
+        category: 'รถไถ/พรวนดิน',
+        icon: '🌾',
+        serviceArea: 'ต.นาตาล, ต.กองโพน, ต.พังเคน',
+        baseRate: 300,
+        unit: 'ไร่',
+        status: 'คิวว่างรับงาน',
+        rating: '4.8 ★ (24 งาน)',
+        equipment: 'บริการรถอัดฟางข้าวหลังเก็บเกี่ยว และเครื่องปลูกมันสำปะหลังแถวตรงระยะแม่นยำ',
+        bookedCount: 15
+      }
+    ];
+
+    let activeBookingProvider = null;
+
+    // =====================================================
+    // INITIALIZATION & RENDERING FUNCTIONS
+    // =====================================================
+    function initApp() {
+      renderCropCards();
+      handleCropChange();
+      renderMarketListings('all');
+      renderLabor('all');
+      setRole('farmer');
+    }
+
+    // Role & Page Switcher (Separates each role into its own dedicated page)
+    function setRole(role) {
+      document.querySelectorAll('.role-btn').forEach(btn => {
+        btn.className = 'role-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:bg-white transition';
+      });
+      document.getElementById('role-' + role).className = 'role-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-emerald-700 text-white shadow-sm transition';
+
+      // Hide all pages first
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.add('hidden');
+      });
+
+      const badge = document.getElementById('role-badge');
+      const title = document.getElementById('hero-title');
+      const desc = document.getElementById('hero-desc');
+
+      if (role === 'farmer') {
+        document.getElementById('tab-price').classList.remove('hidden');
+        badge.innerHTML = '✨ หน้าสำหรับเกษตรกร: เช็กราคากลาง คำนวณเกรดผลผลิต และวางแผนจำหน่าย';
+        title.innerText = 'เช็กราคากลาง คำนวณเกรดผลผลิต และวางแผนรายได้ก่อนขายจริง';
+        desc.innerText = 'ลดเวลาเดินทางไปสอบถามราคาหน้าร้าน คำนวณมูลค่าเพิ่มจากการคัดเกรดและบรรจุภัณฑ์สหกรณ์การเกษตรดิจิทัล อ.นาตาล';
+      } else if (role === 'worker') {
+        document.getElementById('tab-labor').classList.remove('hidden');
+        badge.innerHTML = '🚜 หน้าผู้รับจ้าง/กรรมกร: ศูนย์รวมรถไถ รถเกี่ยว รถขนส่ง โดรนเกษตร และแรงงานรับจ้าง';
+        title.innerText = 'จองคิวรถไถ รถเกี่ยว รถขนส่ง และทีมงานเกษตรกรในพื้นที่ อ.นาตาล';
+        desc.innerText = 'เชื่อมต่อร้านค้าบริการของสมาชิกทั้ง 7 รายโดยตรง พร้อมระบบรวมคิวแปลงใกล้เคียงลดค่าจ้าง 10% และซิงค์ข้อมูลลง Google Sheets';
+      } else if (role === 'buyer') {
+        document.getElementById('tab-market').classList.remove('hidden');
+        badge.innerHTML = '🏪 หน้าผู้ซื้อ/ลานรับซื้อ: ตลาดซื้อ-ขายผลผลิตคัดเกรดและต่อรองราคาอย่างเป็นธรรม';
+        title.innerText = 'กระดานซื้อ-ขายผลผลิตพืชเศรษฐกิจ 5 ชนิด และต่อรองราคาออนไลน์';
+        desc.innerText = 'ประสานงานซื้อ-ขายโดยตรงกับกลุ่มเกษตรกร อ.นาตาล ดูแลฐานข้อมูล Google Sheet โดย นายพิเชษฐ์ชัย ประสมพลอย (062-418-1699)';
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Switch Page by Tab ID
+    function switchTab(tabId) {
+      if (tabId === 'tab-price') {
+        setRole('farmer');
+      } else if (tabId === 'tab-labor') {
+        setRole('worker');
+      } else if (tabId === 'tab-market') {
+        setRole('buyer');
+      }
+    }
+
+    // Render 5 Crop Cards
+    function renderCropCards() {
+      const container = document.getElementById('crop-cards-container');
+      container.innerHTML = Object.values(cropsData).map(crop => {
+        const isSelected = crop.id === selectedCropKey;
+        return `
+          <div onclick="selectCropCard('${crop.id}')" class="card-hover cursor-pointer rounded-2xl p-4 border transition ${isSelected ? 'bg-emerald-50 border-emerald-600 ring-2 ring-emerald-600/20' : 'bg-white border-slate-200'}">
+            <div class="flex justify-between items-start">
+              <span class="text-3xl">${crop.icon}</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">${crop.trend}</span>
+            </div>
+            <h4 class="font-bold text-slate-800 text-sm mt-3">${crop.name}</h4>
+            <div class="text-emerald-700 font-extrabold text-base mt-1">${crop.unitText}</div>
+            <div class="text-[11px] text-slate-500 mt-1">เกณฑ์: ${crop.qualityStandard}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectCropCard(cropKey) {
+      selectedCropKey = cropKey;
+      document.getElementById('calc-crop').value = cropKey;
+      renderCropCards();
+      handleCropChange();
+    }
+
+    function handleCropChange() {
+      selectedCropKey = document.getElementById('calc-crop').value;
+      selectedGradeIndex = 0;
+      renderCropCards();
+
+      const crop = cropsData[selectedCropKey];
+      const gradeContainer = document.getElementById('grade-options');
+
+      gradeContainer.innerHTML = crop.grades.map((g, idx) => `
+        <label onclick="selectGrade(${idx})" class="cursor-pointer border rounded-xl p-3 flex flex-col justify-between transition ${idx === selectedGradeIndex ? 'bg-emerald-50 border-emerald-600' : 'bg-slate-50 border-slate-200'}">
+          <div class="flex items-start gap-2">
+            <input type="radio" name="grade-radio" ${idx === selectedGradeIndex ? 'checked' : ''} class="mt-0.5 text-emerald-600" />
+            <span class="text-xs font-bold text-slate-800 leading-snug">${g.label}</span>
+          </div>
+          <span class="text-[11px] font-semibold ${g.diff >= 0 ? 'text-emerald-700' : 'text-rose-600'} mt-1.5">${g.desc}</span>
+        </label>
+      `).join('');
+
+      calculateRevenue();
+    }
+
+    function selectGrade(index) {
+      selectedGradeIndex = index;
+      const crop = cropsData[selectedCropKey];
+      const gradeContainer = document.getElementById('grade-options');
+      Array.from(gradeContainer.children).forEach((el, idx) => {
+        el.className = `cursor-pointer border rounded-xl p-3 flex flex-col justify-between transition ${idx === selectedGradeIndex ? 'bg-emerald-50 border-emerald-600' : 'bg-slate-50 border-slate-200'}`;
+        el.querySelector('input').checked = (idx === selectedGradeIndex);
+      });
+      calculateRevenue();
+    }
+
+    function calculateRevenue() {
+      const crop = cropsData[selectedCropKey];
+      const weight = parseFloat(document.getElementById('calc-weight').value) || 0;
+      const gradeObj = crop.grades[selectedGradeIndex];
+
+      const packVal = document.querySelector('input[name="pack-option"]:checked').value;
+      let packBonusPerTon = 0;
+      if (packVal === 'coop_sack') packBonusPerTon = 250; // 350 - 100 cost
+      if (packVal === 'premium_pack') packBonusPerTon = 800;
+
+      const finalPerTon = crop.basePricePerTon + gradeObj.diff + packBonusPerTon;
+      const totalIncome = Math.round(finalPerTon * weight);
+      const coopPoints = Math.round(totalIncome * 0.025);
+
+      document.getElementById('calc-crop-badge').innerText = crop.name;
+      document.getElementById('res-base-price').innerText = crop.basePricePerTon.toLocaleString() + ' บาท/ตัน';
+      document.getElementById('res-grade-diff').innerText = (gradeObj.diff >= 0 ? '+' : '') + gradeObj.diff.toLocaleString() + ' บาท/ตัน';
+      document.getElementById('res-pack-diff').innerText = '+' + packBonusPerTon.toLocaleString() + ' บาท/ตัน';
+      document.getElementById('res-final-per-ton').innerText = finalPerTon.toLocaleString() + ' บาท/ตัน';
+      document.getElementById('res-total-income').innerText = totalIncome.toLocaleString() + ' บาท';
+      document.getElementById('res-coop-bonus').innerText = `🎁 สิทธิพิเศษสมาชิกสหกรณ์: สะสมยอดปันผลสหกรณ์ประมาณ ${coopPoints.toLocaleString()} บาท (2.5%)`;
+    }
+
+    function sendCalculatedToMarket() {
+      const crop = cropsData[selectedCropKey];
+      const weight = parseFloat(document.getElementById('calc-weight').value) || 5;
+      const gradeObj = crop.grades[selectedGradeIndex];
+      const packVal = document.querySelector('input[name="pack-option"]:checked').value;
+      let packBonusPerTon = packVal === 'coop_sack' ? 250 : (packVal === 'premium_pack' ? 800 : 0);
+      const finalPerTon = crop.basePricePerTon + gradeObj.diff + packBonusPerTon;
+
+      document.getElementById('post-crop').value = crop.name;
+      document.getElementById('post-tons').value = weight;
+      document.getElementById('post-price').value = finalPerTon;
+      document.getElementById('post-grade').value = gradeObj.label;
+
+      switchTab('tab-market');
+      togglePostModal(true);
+    }
+
+    // =====================================================
+    // TAB 2 FUNCTIONS: MARKETPLACE & NEGOTIATION
+    // =====================================================
+    function renderMarketListings(filterCrop = 'all') {
+      const container = document.getElementById('market-listings');
+      const filtered = filterCrop === 'all'
+        ? marketListings
+        : marketListings.filter(item => item.crop.includes(filterCrop));
+
+      container.innerHTML = filtered.map(item => `
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between card-hover">
+          <div>
+            <div class="flex justify-between items-start gap-2">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">${item.icon}</span>
+                <div>
+                  <h4 class="font-bold text-slate-800 text-base">${item.crop}</h4>
+                  <span class="text-xs text-slate-500">📍 ${item.area}</span>
+                </div>
+              </div>
+              ${item.isGroupPool
+                ? `<span class="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full">🤝 รวมกลุ่มสหกรณ์</span>`
+                : `<span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold px-2.5 py-1 rounded-full">✓ คัดเกรดแล้ว</span>`
+              }
+            </div>
+
+            <div class="mt-3 text-xs text-slate-600 bg-slate-50 rounded-xl p-3 border border-slate-100 space-y-1.5">
+              <div><strong>ผู้ขาย:</strong> ${item.seller}</div>
+              <div class="text-emerald-800 font-semibold"><strong>📞 เบอร์โทรติดต่อ:</strong> <a href="tel:${item.phone.replace(/-/g, '')}" class="underline hover:text-emerald-600">${item.phone}</a></div>
+              <div><strong>คุณภาพ/บรรจุภัณฑ์:</strong> ${item.gradeInfo}</div>
+              <div><strong>ปริมาณพร้อมขาย:</strong> <span class="font-bold text-slate-900">${item.tons} ตัน</span></div>
+              <div class="text-[11px] text-slate-500 pt-1 border-t border-slate-200/70">
+                📗 ดูแลตาราง Google Sheet: <strong>นายพิเชษฐ์ชัย ประสมพลอย (062-418-1699)</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100">
+            <div class="flex justify-between items-baseline">
+              <div>
+                <div class="text-[11px] text-slate-400">ราคาเสนอขาย</div>
+                <div class="text-xl font-extrabold text-emerald-800">${item.askPrice.toLocaleString()} <span class="text-xs font-normal">บ./ตัน</span></div>
+              </div>
+              <div class="text-right">
+                <div class="text-[11px] text-slate-400">ข้อเสนอล่าสุด (${item.offersCount} ราย)</div>
+                <div class="text-sm font-bold text-amber-600">${item.latestOffer.toLocaleString()} บ./ตัน</div>
+              </div>
+            </div>
+
+            <div class="mt-3 flex gap-2">
+              <button onclick="openNegotiateModal(${item.id})" class="flex-1 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold py-2.5 px-3 rounded-xl transition">
+                💬 ต่อรองราคา / เสนอซื้อ
+              </button>
+              <button onclick="showToast('โทรติดต่อ ${item.seller} เบอร์ ${item.phone} (หรือผู้ประสานงาน นายพิเชษฐ์ชัย 062-418-1699)')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold py-2.5 px-3 rounded-xl transition">
+                📞 ${item.phone}
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterMarket(cropName) {
+      renderMarketListings(cropName);
+    }
+
+    function openNegotiateModal(id) {
+      const item = marketListings.find(m => m.id === id);
+      if (!item) return;
+      activeNegotiationId = id;
+
+      document.getElementById('neg-title').innerText = `ต่อรองราคา: ${item.crop} (${item.tons} ตัน)`;
+      document.getElementById('neg-seller').innerText = `${item.seller} (${item.phone})`;
+      document.getElementById('neg-ask-price').innerText = item.askPrice.toLocaleString() + ' บาท/ตัน';
+      document.getElementById('neg-min-fair').innerText = item.fairMinPrice.toLocaleString() + ' บาท/ตัน';
+
+      const input = document.getElementById('neg-offer-input');
+      input.value = item.latestOffer;
+      input.oninput = () => validateFairPrice(item.fairMinPrice, item.askPrice);
+      validateFairPrice(item.fairMinPrice, item.askPrice);
+
+      const modal = document.getElementById('negotiate-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function validateFairPrice(minFair, askPrice) {
+      const val = parseFloat(document.getElementById('neg-offer-input').value) || 0;
+      const msg = document.getElementById('neg-fairness-msg');
+      if (val < minFair) {
+        msg.className = 'text-[11px] mt-1 text-rose-600 font-semibold';
+        msg.innerText = `⚠️ ราคาต่ำกว่าเกณฑ์เป็นธรรมของสหกรณ์ (${minFair.toLocaleString()} บ./ตัน) ระบบแนะนำให้ปรับเพิ่มเพื่อความเป็นธรรม`;
+      } else if (val >= askPrice) {
+        msg.className = 'text-[11px] mt-1 text-emerald-700 font-semibold';
+        msg.innerText = `🌟 คุณเสนอราคาเท่ากับหรือสูงกว่าราคาที่ผู้ขายตั้งไว้ สามารถปิดการซื้อขายได้ทันที!`;
+      } else {
+        msg.className = 'text-[11px] mt-1 text-emerald-700 font-semibold';
+        msg.innerText = `✅ ราคานี้อยู่ในกรอบการต่อรองที่เป็นธรรมแก่ทั้งสองฝ่าย`;
+      }
+    }
+
+    function closeNegotiateModal() {
+      const modal = document.getElementById('negotiate-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function submitNegotiation() {
+      const item = marketListings.find(m => m.id === activeNegotiationId);
+      const val = parseFloat(document.getElementById('neg-offer-input').value) || 0;
+      const note = document.getElementById('neg-note').value || 'เสนอซื้อผ่านระบบสหกรณ์';
+      if (item && val > 0) {
+        item.latestOffer = val;
+        item.offersCount += 1;
+
+        const record = {
+          timestamp: new Date().toLocaleString('th-TH'),
+          type: 'ต่อรองราคาซื้อ-ขาย',
+          detail: `${item.crop} (${item.tons} ตัน) เสนอราคา ${val.toLocaleString()} บ./ตัน (${note})`,
+          contact: `${item.seller} (${item.phone}) | ผู้ดูแล: นายพิเชษฐ์ชัย 062-418-1699`
+        };
+        activityLogs.unshift(record);
+        syncPayloadToGSheet({ sheet: 'market_negotiation', ...record });
+
+        renderMarketListings('all');
+        closeNegotiateModal();
+        showToast(`บันทึกข้อเสนอราคา ${val.toLocaleString()} บ./ตัน ลง Google Sheet ของ นายพิเชษฐ์ชัย (062-418-1699) สำเร็จ!`);
+      }
+    }
+
+    function togglePostModal(show) {
+      const modal = document.getElementById('post-modal');
+      if (show) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function addNewMarketPost() {
+      const seller = document.getElementById('post-seller').value;
+      const phone = document.getElementById('post-phone').value || '062-418-1699';
+      const crop = document.getElementById('post-crop').value;
+      const tons = parseFloat(document.getElementById('post-tons').value) || 5;
+      const askPrice = parseFloat(document.getElementById('post-price').value) || 15000;
+      const area = document.getElementById('post-area').value;
+      const gradeInfo = document.getElementById('post-grade').value;
+
+      const icons = { 'ข้าวเปลือกหอมมะลิ': '🌾', 'อ้อยโรงงาน': '🎋', 'ยางพารา': '🌳', 'ปาล์มน้ำมัน': '🌴', 'มันสำปะหลังสด': '🥔' };
+
+      const newPost = {
+        id: Date.now(),
+        crop,
+        icon: icons[crop] || '🌱',
+        seller,
+        phone,
+        area,
+        tons,
+        askPrice,
+        fairMinPrice: Math.round(askPrice * 0.94),
+        gradeInfo,
+        isGroupPool: true,
+        offersCount: 1,
+        latestOffer: Math.round(askPrice * 0.98)
+      };
+
+      marketListings.unshift(newPost);
+
+      const record = {
+        timestamp: new Date().toLocaleString('th-TH'),
+        type: 'ประกาศขายผลผลิตใหม่',
+        detail: `${crop} ${tons} ตัน ราคา ${askPrice.toLocaleString()} บ./ตัน พื้นที่ ${area}`,
+        contact: `${seller} (${phone})`
+      };
+      activityLogs.unshift(record);
+      syncPayloadToGSheet({ sheet: 'market_listings', ...newPost });
+
+      renderMarketListings('all');
+      togglePostModal(false);
+      showToast('โพสต์ประกาศขายผลผลิตและซิงค์ลง Google Sheet สำเร็จ!');
+    }
+
+    // =====================================================
+    // TAB 3 FUNCTIONS: LABOR & SERVICE MATCHING
+    // =====================================================
+    function renderLabor(categoryFilter = 'all') {
+      const container = document.getElementById('labor-listings');
+      const useGroupDiscount = document.getElementById('group-discount-toggle').checked;
+
+      const filtered = categoryFilter === 'all'
+        ? laborProviders
+        : laborProviders.filter(p => p.category === categoryFilter);
+
+      container.innerHTML = filtered.map(p => {
+        const finalRate = useGroupDiscount ? Math.round(p.baseRate * 0.9) : p.baseRate;
+        return `
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs flex flex-col justify-between card-hover">
+            <div>
+              <div class="flex justify-between items-start gap-2">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-11 h-11 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-2xl shrink-0">
+                    ${p.icon}
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-bold uppercase text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">${p.category}</span>
+                    <h4 class="font-bold text-slate-800 text-sm mt-0.5">${p.name}</h4>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-3 text-xs text-slate-600 space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                <div class="text-emerald-900 font-semibold">👤 ผู้ดูแลร้าน/บริการ: ${p.owner}</div>
+                <div class="text-emerald-700 font-bold">📞 เบอร์โทร: <a href="tel:${p.phone.replace(/-/g, '')}" class="underline hover:text-emerald-900">${p.phone}</a></div>
+                <div><strong>📍 พื้นที่บริการ:</strong> ${p.serviceArea}</div>
+                <div><strong>🛠 รายละเอียดงาน:</strong> ${p.equipment}</div>
+                <div class="flex justify-between pt-1 text-[11px] border-t border-slate-200/60">
+                  <span class="text-amber-600 font-bold">${p.rating}</span>
+                  <span class="text-emerald-700 font-semibold">● ${p.status}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+              <div>
+                <div class="text-[10px] text-slate-400">${useGroupDiscount ? 'ราคาพิเศษรวมแปลงสหกรณ์ (-10%)' : 'อัตราค่าบริการปกติ'}</div>
+                <div class="text-lg font-extrabold text-emerald-800">
+                  ${finalRate.toLocaleString()} <span class="text-xs font-normal">บาท/${p.unit}</span>
+                  ${useGroupDiscount ? `<span class="text-xs text-slate-400 line-through ml-1">${p.baseRate}</span>` : ''}
+                </div>
+              </div>
+
+              <div class="flex gap-1.5">
+                <button onclick="openBookingModal(${p.id})" class="bg-amber-400 hover:bg-amber-300 text-amber-950 font-bold text-xs px-3.5 py-2.5 rounded-xl shadow-xs transition">
+                  📅 จองคิวว่าจ้าง
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterLabor(cat) {
+      renderLabor(cat);
+    }
+
+    function openBookingModal(id) {
+      const provider = laborProviders.find(p => p.id === id);
+      if (!provider) return;
+      activeBookingProvider = provider;
+
+      document.getElementById('book-provider-name').innerText = provider.name;
+      document.getElementById('book-provider-owner').innerText = `ผู้ให้บริการ: ${provider.owner} • โทร. ${provider.phone}`;
+      document.getElementById('book-unit-label').innerText = provider.unit;
+      updateBookingTotal();
+
+      const modal = document.getElementById('booking-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function updateBookingTotal() {
+      if (!activeBookingProvider) return;
+      const amount = parseFloat(document.getElementById('book-amount').value) || 1;
+      const useGroupDiscount = document.getElementById('group-discount-toggle').checked;
+
+      const gross = activeBookingProvider.baseRate * amount;
+      const discount = useGroupDiscount ? Math.round(gross * 0.1) : 0;
+      const net = gross - discount;
+
+      document.getElementById('book-rate-display').innerText = `${activeBookingProvider.baseRate.toLocaleString()} บาท/${activeBookingProvider.unit} × ${amount} ${activeBookingProvider.unit}`;
+      document.getElementById('book-discount-display').innerText = `-${discount.toLocaleString()} บาท`;
+      document.getElementById('book-total-display').innerText = `${net.toLocaleString()} บาท`;
+    }
+
+    function closeBookingModal() {
+      const modal = document.getElementById('booking-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function confirmLaborBooking() {
+      if (!activeBookingProvider) return;
+      const customerName = document.getElementById('book-customer-name').value || 'เกษตรกรสมาชิก';
+      const customerPhone = document.getElementById('book-customer-phone').value || '-';
+      const amount = parseFloat(document.getElementById('book-amount').value) || 1;
+      const loc = document.getElementById('book-location').value;
+      const date = document.getElementById('book-date').value;
+
+      activeBookingProvider.bookedCount += 1;
+
+      const record = {
+        timestamp: new Date().toLocaleString('th-TH'),
+        type: 'จองคิวบริการเกษตร',
+        detail: `จอง "${activeBookingProvider.name}" จำนวน ${amount} ${activeBookingProvider.unit} นัดวันที่ ${date} ณ ${loc}`,
+        contact: `ผู้รับจ้าง: ${activeBookingProvider.owner} (${activeBookingProvider.phone}) | ผู้จ้าง: ${customerName} (${customerPhone})`
+      };
+      activityLogs.unshift(record);
+      syncPayloadToGSheet({ sheet: 'labor_bookings', ...record });
+
+      closeBookingModal();
+      renderLabor('all');
+      showToast(`จองคิว "${activeBookingProvider.owner}" (${activeBookingProvider.phone}) และบันทึกลง Google Sheet สำเร็จ!`);
+    }
+
+    // =====================================================
+    // GOOGLE SHEETS INTEGRATION FUNCTIONS
+    // =====================================================
+    function openGSheetModal(defaultTab = 'market') {
+      const modal = document.getElementById('gsheet-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      switchGSheetView(defaultTab);
+    }
+
+    function closeGSheetModal() {
+      const modal = document.getElementById('gsheet-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function switchGSheetView(tabName) {
+      activeGSheetTab = tabName;
+      ['market', 'labor', 'bookings'].forEach(t => {
+        const btn = document.getElementById('gsheet-tab-' + t);
+        if (btn) {
+          btn.className = t === tabName
+            ? 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-emerald-700 text-white'
+            : 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white text-slate-700 hover:bg-slate-200';
+        }
+      });
+
+      const thead = document.getElementById('gsheet-table-head');
+      const tbody = document.getElementById('gsheet-table-body');
+
+      if (tabName === 'market') {
+        thead.innerHTML = `
+          <tr>
+            <th class="p-2.5 border-r border-emerald-800">รหัส</th>
+            <th class="p-2.5 border-r border-emerald-800">ผลผลิต</th>
+            <th class="p-2.5 border-r border-emerald-800">ผู้ขาย / ผู้ประสานงาน</th>
+            <th class="p-2.5 border-r border-emerald-800">เบอร์โทรศัพท์</th>
+            <th class="p-2.5 border-r border-emerald-800">พื้นที่</th>
+            <th class="p-2.5 border-r border-emerald-800">ปริมาณ (ตัน)</th>
+            <th class="p-2.5 border-r border-emerald-800">ราคาขาย (บ./ตัน)</th>
+            <th class="p-2.5">ข้อเสนอล่าสุด</th>
+          </tr>
+        `;
+        tbody.innerHTML = marketListings.map(item => `
+          <tr class="hover:bg-emerald-50/50">
+            <td class="p-2.5 border-r border-slate-100 text-slate-500">#${item.id}</td>
+            <td class="p-2.5 border-r border-slate-100 font-bold">${item.icon} ${item.crop}</td>
+            <td class="p-2.5 border-r border-slate-100">${item.seller}</td>
+            <td class="p-2.5 border-r border-slate-100 font-bold text-emerald-700">${item.phone}</td>
+            <td class="p-2.5 border-r border-slate-100">${item.area}</td>
+            <td class="p-2.5 border-r border-slate-100 font-semibold">${item.tons}</td>
+            <td class="p-2.5 border-r border-slate-100 font-bold text-emerald-800">${item.askPrice.toLocaleString()}</td>
+            <td class="p-2.5 font-bold text-amber-700">${item.latestOffer.toLocaleString()} (${item.offersCount} ราย)</td>
+          </tr>
+        `).join('');
+      } else if (tabName === 'labor') {
+        thead.innerHTML = `
+          <tr>
+            <th class="p-2.5 border-r border-emerald-800">ลำดับ</th>
+            <th class="p-2.5 border-r border-emerald-800">หมวดหมู่ร้านค้า</th>
+            <th class="p-2.5 border-r border-emerald-800">ชื่อร้านค้า / บริการ</th>
+            <th class="p-2.5 border-r border-emerald-800">ชื่อสมาชิกผู้ดูแล (ชื่อเล่น)</th>
+            <th class="p-2.5 border-r border-emerald-800">เบอร์โทรศัพท์</th>
+            <th class="p-2.5 border-r border-emerald-800">อัตราค่าบริการ</th>
+            <th class="p-2.5">สถานะคิว</th>
+          </tr>
+        `;
+        tbody.innerHTML = laborProviders.map((p, idx) => `
+          <tr class="hover:bg-emerald-50/50">
+            <td class="p-2.5 border-r border-slate-100 text-slate-500">${idx + 1}</td>
+            <td class="p-2.5 border-r border-slate-100 font-semibold text-emerald-800">${p.category}</td>
+            <td class="p-2.5 border-r border-slate-100 font-bold">${p.icon} ${p.name}</td>
+            <td class="p-2.5 border-r border-slate-100">${p.owner}</td>
+            <td class="p-2.5 border-r border-slate-100 font-bold text-emerald-700">${p.phone}</td>
+            <td class="p-2.5 border-r border-slate-100 font-bold">${p.baseRate.toLocaleString()} บ./${p.unit}</td>
+            <td class="p-2.5 text-emerald-700 font-semibold">${p.status}</td>
+          </tr>
+        `).join('');
+      } else {
+        thead.innerHTML = `
+          <tr>
+            <th class="p-2.5 border-r border-emerald-800">วัน-เวลาที่บันทึก</th>
+            <th class="p-2.5 border-r border-emerald-800">ประเภทรายการ</th>
+            <th class="p-2.5 border-r border-emerald-800">รายละเอียดข้อมูลที่ซิงค์ลง Google Sheet</th>
+            <th class="p-2.5">ผู้รับผิดชอบ / เบอร์ติดต่อ</th>
+          </tr>
+        `;
+        tbody.innerHTML = activityLogs.map(log => `
+          <tr class="hover:bg-emerald-50/50">
+            <td class="p-2.5 border-r border-slate-100 text-slate-500">${log.timestamp}</td>
+            <td class="p-2.5 border-r border-slate-100 font-bold text-emerald-800">${log.type}</td>
+            <td class="p-2.5 border-r border-slate-100">${log.detail}</td>
+            <td class="p-2.5 font-semibold text-slate-700">${log.contact}</td>
+          </tr>
+        `).join('');
+      }
+    }
+
+    async function syncPayloadToGSheet(payload) {
+      if (!googleSheetWebhookUrl) return;
+      try {
+        await fetch(googleSheetWebhookUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch (e) {
+        // Silent fallback in prototype mode
+      }
+    }
+
+    function saveGSheetUrl() {
+      const val = document.getElementById('gsheet-url-input').value.trim();
+      googleSheetWebhookUrl = val;
+      const badge = document.getElementById('gsheet-conn-badge');
+      if (val) {
+        badge.innerText = '● เชื่อมต่อลิงก์ Google Sheet ภายนอกสำเร็จ';
+        badge.className = 'text-[11px] font-bold text-white bg-emerald-700 px-2.5 py-0.5 rounded';
+        showToast('บันทึกลิงก์เชื่อมต่อ Google Sheet เรียบร้อยแล้ว!');
+      } else {
+        badge.innerText = '● พร้อมใช้งาน (โหมดตารางสหกรณ์อัตโนมัติ)';
+      }
+    }
+
+    function exportToCSV(type) {
+      activeGSheetTab = type;
+      exportCurrentSheetCSV();
+    }
+
+    function exportCurrentSheetCSV() {
+      let csvContent = '\uFEFF'; // UTF-8 BOM for Thai language in Excel / Google Sheets
+      if (activeGSheetTab === 'market') {
+        csvContent += 'รหัส,ผลผลิต,ผู้ขาย/ผู้ประสานงาน,เบอร์โทรศัพท์,พื้นที่,ปริมาณ(ตัน),ราคาเสนอขาย(บาท/ตัน),ข้อเสนอล่าสุด(บาท/ตัน),ผู้ดูแลGoogleSheet\n';
+        marketListings.forEach(m => {
+          csvContent += `"${m.id}","${m.crop}","${m.seller}","${m.phone}","${m.area}","${m.tons}","${m.askPrice}","${m.latestOffer}","นายพิเชษฐ์ชัย ประสมพลอย (062-418-1699)"\n`;
+        });
+      } else if (activeGSheetTab === 'labor') {
+        csvContent += 'ลำดับ,หมวดหมู่,ชื่อร้านค้าบริการ,ชื่อสมาชิกผู้ดูแล,เบอร์โทรศัพท์,พื้นที่บริการ,อัตราค่าบริการ,หน่วย,สถานะ\n';
+        laborProviders.forEach((p, idx) => {
+          csvContent += `"${idx + 1}","${p.category}","${p.name}","${p.owner}","${p.phone}","${p.serviceArea}","${p.baseRate}","${p.unit}","${p.status}"\n`;
+        });
+      } else {
+        csvContent += 'วันเวลา,ประเภทรายการ,รายละเอียด,ผู้ติดต่อ\n';
+        activityLogs.forEach(l => {
+          csvContent += `"${l.timestamp}","${l.type}","${l.detail}","${l.contact}"\n`;
+        });
+      }
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ALL_IN_ONE_การเกษตร_${activeGSheetTab}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      showToast('ดาวน์โหลดไฟล์ CSV สำหรับนำเข้า Google Sheet เรียบร้อยแล้ว!');
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 4000);
+    }
+
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
